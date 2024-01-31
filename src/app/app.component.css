@@ -1,0 +1,21 @@
+.formdiv{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin-bottom:30px ;
+}
+
+.innerformdiv{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    gap: 10px;
+}
+
+input{
+    background-color: #FFFBFC;
+}
+
+.warning{
+    color: red;
+}
