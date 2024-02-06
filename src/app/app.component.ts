@@ -12,17 +12,7 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent implements OnInit{
   
-  public submitted:boolean=false;
-  
-  ngOnInit(): void {
-    this.addHobby()
-
-
-    this.profileForm.valueChanges.subscribe( ()=>console.log(this.profileForm.invalid))
-    this.profileForm.markAsPristine()
-  }
   title = 'nestedreac';
-
 
   public profileForm = new FormGroup({
     firstName: new FormControl('',[Validators.required,Validators.maxLength(20)]),
@@ -42,15 +32,25 @@ export class AppComponent implements OnInit{
     }),
     hobbies: new FormArray([])
   })
-
   
+
+
+  ngOnInit(): void {
+    this.addHobby()
+  }
+  
+    
+  get hobbies(){
+    return this.profileForm.get('hobbies') as FormArray;
+  }
+
   addHobby() {
     const hobbiesFormArray = this.profileForm.get('hobbies') as FormArray;
     hobbiesFormArray.push(new FormControl(''));
   }
   
   submit(){
-    this.submitted=true;
+    console.log(this.profileForm.value);
   }
 
 }

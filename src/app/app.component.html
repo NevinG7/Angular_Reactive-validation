@@ -1,9 +1,9 @@
-<form [formGroup]="profileForm" class="formdiv">
+<form [formGroup]="profileForm" (ngSubmit)="submit()" class="formdiv">
 
   <label for="firstName">First Name:</label>
   <input type="text" id="firstName" formControlName="firstName">
    
-    <div class="warning" *ngIf="profileForm.get('firstName')?.hasError('required') && submitted">
+    <div class="warning" *ngIf="profileForm.get('firstName')?.hasError('required') && profileForm.get('firstName')?.touched">
       First Name is required.
     </div>
     <div class="warning" *ngIf="profileForm.get('firstName')?.hasError('maxlength')">
@@ -21,7 +21,7 @@
   <label for="lastName">Last Name:</label>
   <input type="text" id="lastName" formControlName="lastName">
 
-  <div class="warning" *ngIf="profileForm.get('lastName')?.hasError('required') && submitted">
+  <div class="warning" *ngIf="profileForm.get('lastName')?.hasError('required') && profileForm.get('lastName')?.touched">
     Last Name is required.
   </div>
   <div class="warning" *ngIf="profileForm.get('lastName')?.hasError('maxlength')">
@@ -31,7 +31,7 @@
   <label for="age">Age:</label>
   <input type="text" id="age" formControlName="age">
   
-  <div class="warning" *ngIf="profileForm.get('age')?.hasError('required') && submitted">
+  <div class="warning" *ngIf="profileForm.get('age')?.hasError('required') && profileForm.get('age')?.touched">
     Age is required.
   </div>
   <div class="warning" *ngIf="profileForm.get('age')?.hasError('pattern')">
@@ -60,7 +60,7 @@
       <label for="street">Street:</label>
       <input type="text" id="street" formControlName="street">
 
-      <div class="warning" *ngIf="profileForm.get('address.street')?.hasError('required') && submitted">
+      <div class="warning" *ngIf="profileForm.get('address.street')?.hasError('required') && profileForm.get('address.street')?.touched">
         Street is required.
       </div>
       <div class="warning" *ngIf="profileForm.get('address.street')?.hasError('maxlength')">
@@ -77,7 +77,7 @@
       <label for="city">City:</label>
       <input type="text" id="city" formControlName="city">
 
-      <div class="warning" *ngIf="profileForm.get('address.city')?.hasError('required') && submitted">
+      <div class="warning" *ngIf="profileForm.get('address.city')?.hasError('required') && profileForm.get('address.city')?.touched">
         City is required.
       </div>
       <div class="warning" *ngIf="profileForm.get('address.city')?.hasError('maxlength')">
@@ -86,7 +86,7 @@
 
       <label for="state">State:</label>
       <input type="text" id="state" formControlName="state">
-      <div class="warning" *ngIf="profileForm.get('address.state')?.hasError('required') && submitted">
+      <div class="warning" *ngIf="profileForm.get('address.state')?.hasError('required') && profileForm.get('address.state')?.touched">
         State is required.
       </div>
       <div class="warning" *ngIf="profileForm.get('address.state')?.hasError('maxlength')">
@@ -96,7 +96,7 @@
       <label for="zipCode">Zip Code:</label>
       <input type="text" id="zipCode" formControlName="zipCode">
 
-      <div class="warning" *ngIf="profileForm.get('address.zipCode')?.hasError('required') && submitted">
+      <div class="warning" *ngIf="profileForm.get('address.zipCode')?.hasError('required') && profileForm.get('address.zipCode')?.touched">
         Zip Code is required.
       </div>
       <div class="warning" *ngIf="profileForm.get('address.zipCode')?.hasError('maxlength')">
@@ -109,7 +109,7 @@
       <label for="country">Country</label>
       <input type="text" id="country" formControlName="country">
 
-      <div class="warning" *ngIf="profileForm.get('address.country')?.hasError('required') && submitted">
+      <div class="warning" *ngIf="profileForm.get('address.country')?.hasError('required') && profileForm.get('address.country')?.touched">
         Country is required.
       </div>
       <div class="warning" *ngIf="profileForm.get('address.country')?.hasError('maxlength')">
@@ -117,17 +117,20 @@
       </div>
     </form>
 
+
+
   <label for="hobbies">Hobbies:</label>
-  <div>
-    <div class="warning" *ngFor="let hobby of profileForm.get('hobbies')?.value; let i = index">
-      <input type="text" placeholder="Hobby {{ i + 1 }}">
+  
+  <div formArrayName="hobbies">
+    <div  *ngFor="let hobby of hobbies.controls; let i = index" class="warning">
+      <input type="text" id="hobby-{{ i }}" placeholder="Hobby {{ i + 1 }}" [formControlName]="i">
     </div>
     <button type="button" (click)="addHobby()">Add Hobby</button>
-
   </div>
 
+
+<button type="submit">Submit</button>
 </form>
 
-<button (click)="submit()">Submit</button>
 
 
